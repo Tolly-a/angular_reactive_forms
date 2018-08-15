@@ -1,0 +1,47 @@
+<div class="col-xs-8 col-xs-offset-2">
+  
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div formGroupName="user">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" formControlName="email"   [ngClass]="{'is-invalid': form.get('user.email').invalid && form.get('user.email').touched}">
+            <span class="error-text" *ngIf="form.get('user.email').invalid && form.get('user.email').touched">
+                <span class="error-text" *ngIf="form.get('user.email').errors['required']">should not be empty<br></span>
+                <span class="error-text" *ngIf="form.get('user.email').errors['email']">incorrect e-mail<br></span>
+                <span class="error-text" *ngIf="form.get('user.email').errors['emailIsUsed']">email Is Used</span>
+            </span>
+          </div>
+        
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" formControlName="pass" [ngClass]="{'is-invalid': form.get('user.pass').invalid && form.get('user.pass').touched}">
+            <span class="error-text" *ngIf="form.get('user.pass').invalid && form.get('user.pass').touched">
+                <span class="error-text" *ngIf="form.get('user.pass').errors['required']">should not be empty <br></span>
+                <span class="error-text" *ngIf="form.get('user.pass').errors['lengthError']"> must not be less than {{ stringLength }} characters</span>
+            </span>
+          </div>
+      </div>
+
+      <div class="form-group">
+      <label>Select Country</label>
+      <select class="form-control" formControlName="country">
+        <option value="ru">Russian</option>
+        <option value="by">Beloruse</option>
+        <option value="ua">Ukraine</option>
+      </select>
+    </div>
+    
+    <div class="radio" *ngFor="let ans of answers">
+      <label>
+        <input
+          type="radio"
+          name="answer"
+          formControlName="answer"
+          [value]="ans.type"
+        > {{ans.text}}
+      </label>
+    </div>
+   
+    <button [disabled]="form.invalid" class="btn btn-success" type="submit">Save</button>
+  </form>
+</div>
